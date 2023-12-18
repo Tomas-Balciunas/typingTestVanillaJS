@@ -27,7 +27,6 @@
 }
 
 @keyframes blink {
-
     0%, 100% {
         opacity: 0;
     }
@@ -55,7 +54,7 @@
     width: 100%;
 }
 
-.placeholder {
+#placeholder {
     color: #383838;
     padding: 1em;
     user-select: none;

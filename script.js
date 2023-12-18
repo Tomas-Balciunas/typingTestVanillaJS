@@ -4,59 +4,60 @@ let text
 let editableContent = document.querySelector('#editableContent');
 let placeholder = document.querySelector('#placeholder');
 
-
-function highlightText(i, className) {
-    document.querySelector(`#letter${i}`).classList.add(className, 'highlighted')
-}
+const allowed = ['Backspace', 'Escape', 'Enter']
 
 function handleInput(letter) {
     let preventFlag = false;
 
     return new Promise(resolve => {
         let inputHandler = function (event) {
-            preventFlag = validateSpace(event.data, letter, event)
-            cleanInput(inputHandler);
-            resolve({ input: event.data, preventFlag });
+            const input = event.key;
+
+            if (allowed.includes(input) || input.length == 1) {
+                preventFlag = validateSpace(input, letter, event)
+                cleanInput(inputHandler);
+                resolve({ input, preventFlag });
+            }
+
+            event.preventDefault()
         }
 
-        editableContent.addEventListener('input', inputHandler);
+        editableContent.addEventListener('keydown', inputHandler);
     });
 }
 
-async function mainLoop() {
+async function main() {
     wrapText()
 
-    for (let i = 0; i <= text.length; i++) {
-        let letter = text[i];
-        document.querySelector(`#letter${i}`).classList.add('bold')
-        console.log(letter + ' ' + i)
+    for (let i = 0; i < text.length; i++) {
+        blinkHandler(true, i)
+        const letter = text[i];
         const { input, preventFlag } = await handleInput(letter);
-        console.log(input)
 
         if (preventFlag) {
             i--;
             continue;
         }
 
-        const className = validateInput(input, letter);
-
-        highlightText(i, className)
-
-        document.querySelector(`#letter${i}`).classList.remove('bold')
-
         if (input === 'Escape') {
-            console.log('Exiting the loop.');
             break;
         }
-    }
-}
 
-function validateInput(input, letter) {
-    if (input !== letter) {
-        return 'incorrect';
-    }
+        if (input === 'Backspace') {
+            i = handleBackspace(i);
+            continue
+        }
 
-    return 'correct';
+        if (input === ' ') {
+            blinkHandler(false, i)
+            continue
+        }
+
+        const className = validateInput(input, letter);
+        highlightText(i, className)
+
+        blinkHandler(false, i)
+    }
 }
 
 function getText() {
@@ -65,7 +66,7 @@ function getText() {
 }
 
 getText()
-mainLoop()
+main()
 
 
 

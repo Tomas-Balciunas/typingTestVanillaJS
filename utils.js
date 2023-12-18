@@ -1,5 +1,5 @@
 function validateSpace(input, letter, event) {
-    if ((input === ' ' || letter === ' ') && input !== letter) {
+    if ((input === ' ' || letter === ' ') && input !== letter && input !== 'Backspace') {
         event.preventDefault();
         return true;
     }
@@ -7,9 +7,17 @@ function validateSpace(input, letter, event) {
     return false;
 }
 
+function validateInput(input, letter) {
+    if (input !== letter) {
+        return 'incorrect';
+    }
+
+    return 'correct';
+}
+
 function cleanInput(inputHandler) {
     editableContent.textContent = '';
-    editableContent.removeEventListener('input', inputHandler);
+    editableContent.removeEventListener('keydown', inputHandler);
 }
 
 function wrapText() {
@@ -18,4 +26,26 @@ function wrapText() {
         modified += `<span id="letter${i}">${text[i]}</span>`
         placeholder.innerHTML = modified
     }
+}
+
+function highlightText(i, className) {
+    document.querySelector(`#letter${i}`).classList.add(className, 'highlighted')
+}
+
+function blinkHandler(blink, i) {
+    if (blink) {
+        document.querySelector(`#letter${i}`).classList.add('bold')
+    } else {
+        document.querySelector(`#letter${i}`).classList.remove('bold')
+    }
+}
+
+function handleBackspace(i) {
+    if (i > 0) {
+        blinkHandler(false, i)
+        document.querySelector(`#letter${i - 1}`).classList = [];
+        return i - 2
+    }
+
+    return i - 1;
 }
