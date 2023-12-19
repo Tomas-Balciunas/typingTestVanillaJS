@@ -1,25 +1,3 @@
-function validateSpace(input, letter, event) {
-    if ((input === ' ' || letter === ' ') && input !== letter && input !== 'Backspace') {
-        event.preventDefault();
-        return true;
-    }
-
-    return false;
-}
-
-function validateInput(input, letter) {
-    if (input !== letter) {
-        return 'incorrect';
-    }
-
-    return 'correct';
-}
-
-function cleanInput(inputHandler) {
-    editableContent.textContent = '';
-    editableContent.removeEventListener('keydown', inputHandler);
-}
-
 function wrapText() {
     let modified = ''
     for (let i = 0; i < text.length; i++) {
@@ -28,24 +6,22 @@ function wrapText() {
     }
 }
 
-function highlightText(i, className) {
-    document.querySelector(`#letter${i}`).classList.add(className, 'highlighted')
+function statsHandler(validated) {
+    validated ? accuracy.correct++ : accuracy.incorrect++
+    accuracy.total++
+    accuracy.percentage = (parseInt(accuracy.correct) / parseInt(accuracy.total) * 100).toPrecision(4)
+    console.log(accuracy.percentage)
+    updateStats()
 }
 
-function blinkHandler(blink, i) {
-    if (blink) {
-        document.querySelector(`#letter${i}`).classList.add('bold')
-    } else {
-        document.querySelector(`#letter${i}`).classList.remove('bold')
-    }
+function appendSymbol(input) {
+    userText += input;
+    console.log(userText)
 }
 
-function handleBackspace(i) {
-    if (i > 0) {
-        blinkHandler(false, i)
-        document.querySelector(`#letter${i - 1}`).classList = [];
-        return i - 2
-    }
-
-    return i - 1;
+function updateStats() {
+    total.innerText = accuracy.total;
+    correct.innerText = accuracy.correct;
+    incorrect.innerText = accuracy.incorrect;
+    percentage.innerText = accuracy.percentage;
 }
