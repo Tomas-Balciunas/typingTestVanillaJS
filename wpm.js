@@ -6,8 +6,8 @@ async function initiateTest() {
         if (!timerStarted) {
             timer = new Promise(resolve => {
                 let initiateTimer = function () {
-                    console.log('started')
-                    setTimeout(() => resolve({ timeout: true }), 200000);
+                    displayTimer();
+                    setTimeout(() => resolve({ timeout: true }), (timeLimit * 1000));
                     timerStarted = true;
                     editableContent.removeEventListener('keydown', initiateTimer)
                 }
@@ -43,6 +43,7 @@ async function initiateTest() {
                 case ' ':
                     blinkHandler(false, i);
                     appendSymbol(input);
+                    wpmHandler()
                     continue;
                 default:
                     const validated = validateInput(input, letter);
@@ -54,7 +55,6 @@ async function initiateTest() {
         } catch (e) {
             console.log(`Error: ${e}`)
         }
-
     }
 }
 
@@ -92,7 +92,6 @@ function backspaceHandler(i) {
     if (i > 0) {
         blinkHandler(false, i)
         userText = userText.slice(0, -1)
-        console.log(userText)
         document.querySelector(`#letter${i - 1}`).classList = [];
         return i - 2
     }

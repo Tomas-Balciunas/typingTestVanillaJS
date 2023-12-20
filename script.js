@@ -1,12 +1,19 @@
 "use strict";
 
 let text
-let editableContent = document.querySelector('#editableContent');
-let placeholder = document.querySelector('#placeholder');
-let total = document.querySelector('#total');
-let correct = document.querySelector('#correct');
-let incorrect = document.querySelector('#incorrect');
-let percentage = document.querySelector('#percentage');
+const timeLimit = 60
+const editableContent = document.querySelector('#editableContent');
+const placeholder = document.querySelector('#placeholder');
+const total = document.querySelector('#total');
+const correct = document.querySelector('#correct');
+const incorrect = document.querySelector('#incorrect');
+const percentage = document.querySelector('#percentage');
+const timerElement = document.querySelector('#timer');
+const wordsElem = document.querySelector('#words');
+const wpmElem = document.querySelector('#wpm');
+const cwpmElem = document.querySelector('#cwpm');
+let timeInSeconds = timeLimit;
+
 
 const allowed = ['Backspace', 'Escape', 'Enter'];
 let userText = '';
@@ -19,10 +26,14 @@ let accuracy = {
     total: 0,
     correct: 0,
     incorrect: 0,
-    percentage: 0
+    percentage: 0,
+    words: 0,
+    wpm: 0,
+    cwpm: 0
 };
 
 function main() {
+    timerElement.innerText = timeLimit;
     wrapText();
     initiateTest();
 }
@@ -33,5 +44,6 @@ function getText() {
 }
 
 getText()
-updateStats()
+updateCharacters()
+updateWords()
 main()
