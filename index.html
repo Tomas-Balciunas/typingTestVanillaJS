@@ -12,10 +12,12 @@
 
 <body>
     <div id="editableContainer">
-        <div id="editableContent" contenteditable="true" spellcheck="false" readonly="true" autofocus></div>
+        <div id="editableContent" contenteditable="true" spellcheck="false" readonly="true"></div>
         <div id="placeholder"></div>
     </div>
-
+    <div>
+        <button id="testBtn">Start Test</button>
+    </div>
     <div>
         <p>Total characters typed: <span id="total"></span></p>
         <p>Correct characters: <span id="correct"></span></p>
@@ -28,9 +30,14 @@
 
     <div id="timer"></div>
 
-    <script src="wpm.js" defer></script>
-    <script src="utils.js" defer></script>
-    <script src="script.js" defer></script>
+    <div id="resultContainer">
+
+    </div>
+
+    <script src="js/actions/wpm.js" defer></script>
+    <script src="js/utils/wpm_utils.js" defer></script>
+    <script src="js/utils/utils.js" defer></script>
+    <script src="js/script.js" defer></script>
 </body>
 
 </html>

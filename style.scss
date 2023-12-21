@@ -39,8 +39,9 @@
 
 #editableContainer {
     border: 1px solid #ccc;
+    padding: 1em;
     width: 70vh;
-    height: fit-content;
+    height: 10vh;
     position: relative;
     font-family: Arial, sans-serif;
     font-size: 3vh;
@@ -49,14 +50,27 @@
 
 #editableContent {
     position: absolute;
+    left: 0;
+    top: 0;
+    padding: inherit;
     color: rgba(0, 0, 0, 0);
     outline: none;
-    height: 100%;
-    width: 100%;
+    height: inherit;
+    width: inherit;
 }
 
 #placeholder {
     color: #383838;
-    padding: 1em;
     user-select: none;
+    height: 100%;
+    overflow: hidden;
+}
+
+#resultContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.result {
+    background-color: #797979;
 }
