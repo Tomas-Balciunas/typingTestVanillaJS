@@ -11,31 +11,55 @@
 </head>
 
 <body>
-    <div id="editableContainer">
-        <div id="editableContent" contenteditable="true" spellcheck="false" readonly="true"></div>
-        <div id="placeholder"></div>
-    </div>
-    <div>
-        <button id="testBtn">Start Test</button>
-    </div>
-    <div>
-        <p>Total characters typed: <span id="total"></span></p>
-        <p>Correct characters: <span id="correct"></span></p>
-        <p>Incorrect characters:  <span id="incorrect"></span></p>
-        <p>Accuracy:  <span id="percentage"></span>%</p>
-        <p>Words typed:  <span id="words"></span></p>
-        <p>WPM:  <span id="wpm"></span></p>
-        <p>CWPM:  <span id="cwpm"></span></p>
+    <div class="container">
+
+        <div id="timer"></div>
+
+        <div id="editableContainer">
+            <div id="editableContent" contenteditable="true" spellcheck="false" readonly="true"></div>
+            <div id="placeholder"></div>
+        </div>
+
+        <div id="btnContainer">
+            <button class="btn" id="testBtn">Start Test</button>
+            <button class="btn" id="textBtn">Get New Text</button>
+        </div>
+
+        <div id="infoContainer">
+            <div id="statContainer">
+                <span class="smallTitle">Statistics</span>
+                <span>Total characters typed: <span id="total"></span></span>
+                <span>Correct characters: <span id="correct"></span></span>
+                <span>Incorrect characters: <span id="incorrect"></span></span>
+                <span>Accuracy: <span id="percentage"></span>%</span>
+                <span>Words typed: <span id="words"></span></span>
+                <span>WPM: <span id="wpm"></span></span>
+                <span>CWPM: <span id="cwpm"></span></span>
+            </div>
+
+            <div id="resultContainer"></div>
+        </div>
+
+        <div>
+            <p class="information">
+                Actions:<br>
+                'Enter' - restarts the test.<br>
+                'Escape' - ends the test.<br>
+                Statistics will update as you type. 
+                You may use 'Backspace' to correct your mistakes.<br>
+                However, incorrect symbols that have been corrected will still count towards your score.<br>
+                Results will be stored only when timer runs out or you reach the end of the text.
+            </p>
+        </div>
     </div>
 
-    <div id="timer"></div>
 
-    <div id="resultContainer">
-
-    </div>
-
+    <script src="js/variables.js" defer></script>
+    <script src="js/actions/timer.js" defer></script>
     <script src="js/actions/wpm.js" defer></script>
+    <script src="js/actions/stats.js" defer></script>
     <script src="js/utils/wpm_utils.js" defer></script>
+    <script src="js/utils/stats_utils.js" defer></script>
     <script src="js/utils/utils.js" defer></script>
     <script src="js/script.js" defer></script>
 </body>

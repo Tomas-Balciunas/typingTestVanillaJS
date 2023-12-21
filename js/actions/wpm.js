@@ -4,57 +4,38 @@ async function initiateTest() {
             blinkHandler(true, i)
             const letter = text[i];
             const result = await Promise.race([inputHandler(letter, startTimer()), timerPromise]);
+            const { command, input, timeout, invalid } = result || {};
 
-            if (result.command) {
-                return result.command;
-            }
-
-            if (result.timeout) {
+            if (command === 'Backspace') {
+                i = backspaceHandler(i);
+                continue
+            } else if (command) {
+                return command;
+            } else if (timeout) {
                 return true
-            }
-
-            const { input, preventFlag } = result
-
-            if (preventFlag) {
+            } else if (invalid) {
                 i--;
                 continue;
+            } else {
+                input === ' ' ? spaceBundle(input, i) : symbolBundle(input, i, letter)
             }
 
-            switch (input) {
-                case 'Backspace':
-                    i = backspaceHandler(i);
-                    continue;
-                case ' ':
-                    blinkHandler(false, i);
-                    appendSymbol(input);
-                    wpmHandler()
-                    continue;
-                default:
-                    const validated = validateInput(input, letter);
-                    highlightHandler(i, validated);
-                    statsHandler(validated);
-                    appendSymbol(input)
-                    blinkHandler(false, i);
-            }
+            blinkHandler(false, i);
         } catch (e) {
             console.log(`Error: ${e}`)
         }
     }
-
     return true
 }
 
 function inputHandler(letter) {
-    let preventFlag = false;
-
     return new Promise(resolve => {
         editableContent.addEventListener('keydown', userInput = (event) => {
             const input = event.key;
 
             if (input.length == 1) {
-                preventFlag = validateSpace(input, letter, event)
                 cleanInput(userInput);
-                resolve({ input, preventFlag });
+                resolve({ input, invalid: validateSpace(input, letter, event) });
             } else if (allowed.includes(input)) {
                 cleanInput(userInput);
                 resolve({ command: input })
@@ -63,4 +44,19 @@ function inputHandler(letter) {
             event.preventDefault()
         });
     });
+}
+
+function spaceBundle(input, i) {
+    blinkHandler(false, i);
+    appendSymbol(input);
+    wpmHandler()
+    showOrHideLetters(i, true)
+}
+
+function symbolBundle(input, i, letter) {
+    const validated = validateInput(input, letter);
+    highlightHandler(i, validated);
+    statsHandler(validated);
+    appendSymbol(input)
+    showOrHideLetters(i, true)
 }

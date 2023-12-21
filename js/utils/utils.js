@@ -1,96 +1,54 @@
+function getText() {
+    return new Promise((resolve) => {
+        text = 'Test textTest textTest textTest textTest textTest textTest textTest textTest textTest textTest textTest text textTest text textTest text textTest text textTest text';
+        placeholder.innerText = text; 
+        resolve()
+    })
+    // fetch('http://metaphorpsum.com/sentences/20')
+    //     .then(response => response.text())
+    //     .then(data => {
+    //         text = data;
+    //         placeholder.innerText = data;
+    //     })
+    //     .catch(error => {
+    //         console.error(`Error: ${error}`);
+    //     });
+}
+
 function wrapText() {
     let letters = text.split('')
+    let start = performance.now()
     placeholder.innerHTML = letters.map(function (letter, i) {
         return `<span id="letter${i}">${letter}</span>`;
     }).join('');
+    childrenList = placeholder.children
+    let end = performance.now()
+    console.log(`
+    start: ${start}
+    end: ${end}
+    res: ${end-start}
+    `)
+    
 }
 
-function statsHandler(validated) {
-    validated ? result.correct++ : result.incorrect++
-    result.total++
-    result.percentage = (parseInt(result.correct) / parseInt(result.total) * 100).toPrecision(4)
-    updateCharacters()
-}
+function reset() {
+    let spans = placeholder.children
 
-function appendSymbol(input) {
-    userText += input;
-}
-
-function updateCharacters() {
-    total.innerText = result.total;
-    correct.innerText = result.correct;
-    incorrect.innerText = result.incorrect;
-    percentage.innerText = result.percentage;
-}
-
-function updateWords() {
-    wordsElem.innerText = result.words
-    wpmElem.innerText = result.wpm
-    cwpmElem.innerText = result.cwpm
-}
-
-function startTimer() {
-    if (!timerStarted) {
-        timeInSeconds = timeLimit;
-        timeInSeconds--;
-        timerPromise = new Promise(resolve => {
-            const initiateTimer = function () {
-                editableContent.removeEventListener('keydown', initiateTimer);
-
-                intervalId = setInterval(function () {
-                    timerElement.textContent = timeInSeconds;
-
-                    if (timeInSeconds === 0) {
-                        clearInterval(intervalId);
-                        resolve({ timeout: true })
-                    } else {
-                        console.log(timeInSeconds)
-                        timeInSeconds--;
-                    }
-                }, 1000)
-            }
-
-            timerStarted = true;
-            editableContent.addEventListener('keydown', initiateTimer);
-        });
-    }
-};
-
-function wpmHandler() {
-    const separator = ' ';
-    let textArr = formatText(text, separator)
-    let userTextArr = formatText(userText, separator)
-    let correctW = compareWords(textArr, userTextArr)
-    calculateWords(userTextArr, correctW)
-}
-
-function calculateWords(userTextArr, correctW) {
-    let calculator = (c) => {
-        return ((60 / (timeLimit - timeInSeconds)) * c).toPrecision(2);
-    }
-    const count = userTextArr.length
-    const countC = correctW.length
-    const wpm = calculator(count)
-    const cwpm = calculator(countC)
-
-    result.words = count
-    result.wpm = wpm
-    result.cwpm = cwpm
-
-    updateWords()
-}
-
-function compareWords(textArr, userTextArr) {
-    let cW = []
-    for (let i = 0; i < userTextArr.length; i++) {
-        if (userTextArr[i] === textArr[i]) {
-            cW.push(userTextArr[i])
-        }
+    for (let i = 0; i < spans.length; i++) {
+        spans[i].removeAttribute('class');
     }
 
-    return cW;
+    clearInterval(intervalId);
+    timerElement.innerText = timeLimit;
+    timerStarted = false;
+    testBtn.disabled = false
+    textBtn.disabled = false
 }
 
-function formatText(text, separator) {
-    return text.replace(/[^a-zA-Z0-9\s]/g, '').trim().split(separator);
+function clearStats() {
+    for (let key in result) {
+        result[key] = 0
+    }
+    updateCharactersElement()
+    updateWordsElement()
 }

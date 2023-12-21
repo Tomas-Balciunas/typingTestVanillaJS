@@ -15,6 +15,8 @@ function backspaceHandler(i) {
         blinkHandler(false, i)
         userText = userText.slice(0, -1)
         document.querySelector(`#letter${i - 1}`).classList = [];
+        showOrHideLetters(i, false)
+
         return i - 2
     }
 
@@ -37,4 +39,14 @@ function validateInput(input, letter) {
 function cleanInput(inputHandler) {
     editableContent.textContent = '';
     editableContent.removeEventListener('keydown', inputHandler);
+}
+
+function showOrHideLetters(i, bool) {
+    if (i >= 15) {
+        if (bool) {
+            childrenList[i - 15].classList.add('hidden')
+        } else {
+            childrenList[i - 15].classList.remove('hidden')
+        }
+    }
 }
