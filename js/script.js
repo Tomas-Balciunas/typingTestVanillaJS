@@ -1,5 +1,9 @@
 "use strict";
 
+import { initiateTest } from "./actions/wpm.js";
+import { getText, wrapText, reset, clearStats } from "./utils/utils.js";
+import { displayResults, storeResult } from "./actions/stats.js";
+
 testBtn.addEventListener('mousedown', launchTest)
 textBtn.addEventListener('mousedown', async function () {
     getText().then(() => {

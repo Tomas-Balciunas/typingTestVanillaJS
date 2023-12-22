@@ -1,4 +1,6 @@
-function startTimer() {
+"use strict";
+
+export function startTimer() {
     if (!timerStarted) {
         timeInSeconds = timeLimit;
         timeInSeconds--;
@@ -13,7 +15,6 @@ function startTimer() {
                         clearInterval(intervalId);
                         resolve({ timeout: true })
                     } else {
-                        console.log(timeInSeconds)
                         timeInSeconds--;
                     }
                 }, 1000)

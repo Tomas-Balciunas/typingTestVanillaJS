@@ -1,3 +1,5 @@
+"use strict";
+
 function highlightHandler(i, validated) {
     document.querySelector(`#letter${i}`).classList.add(classes[validated], 'highlighted')
 }

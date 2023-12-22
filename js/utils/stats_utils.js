@@ -1,3 +1,5 @@
+"use strict";
+
 function appendResult(data) {
     const div = document.createElement('div');
     div.classList.add('result')
@@ -36,13 +38,13 @@ function compareWords(textSplit, userTextSplit) {
 
 function calculateWords(userTextSplit, correctWords) {
     let calculator = (c) => {
-        return ((60 / (timeLimit - timeInSeconds)) * c).toPrecision(2);
+        return ((60 / (timeLimit - timeInSeconds)) * c);
     }
+
     const count = userTextSplit.length
     const countC = correctWords.length
-    const wpm = calculator(count)
-    const cwpm = calculator(countC)
-
+    const wpm = parseInt(calculator(count))
+    const cwpm = parseInt(calculator(countC))
     result.words = count
     result.wpm = wpm
     result.cwpm = cwpm

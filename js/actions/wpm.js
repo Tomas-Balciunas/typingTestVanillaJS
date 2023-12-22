@@ -1,4 +1,9 @@
-async function initiateTest() {
+"use strict";
+
+import { startTimer } from "./timer.js";
+import { statsHandler, wpmHandler } from "./stats.js";
+
+export async function initiateTest() {
     for (let i = 0; i < text.length; i++) {
         try {
             blinkHandler(true, i)
@@ -30,7 +35,7 @@ async function initiateTest() {
 
 function inputHandler(letter) {
     return new Promise(resolve => {
-        editableContent.addEventListener('keydown', userInput = (event) => {
+        editableContent.addEventListener('keydown', function userInput (event)  {
             const input = event.key;
 
             if (input.length == 1) {

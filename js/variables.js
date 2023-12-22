@@ -1,3 +1,5 @@
+"use strict";
+
 const timeLimit = 60
 let timerStarted = false
 let timerPromise
