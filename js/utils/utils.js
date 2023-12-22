@@ -6,11 +6,13 @@ export function getText() {
     //     placeholder.innerText = text;
     //     resolve()
     // })
-    return fetch('http://metaphorpsum.com/sentences/20')
-        .then(response => response.text())
+    return fetch('https://api.quotable.io/quotes/random?limit=10')
+        .then(response => response.json())
         .then(data => {
-            text = data;
-            placeholder.innerText = data;
+            text = data.map(function (e) {
+                return e.content
+            }).join(' ');
+            placeholder.innerText = text;
         })
         .catch(error => {
             console.error(`Error: ${error}`);
