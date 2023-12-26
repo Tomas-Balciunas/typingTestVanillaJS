@@ -1,13 +1,14 @@
 "use strict";
 
 const timeLimit = 60
+let chart;
 let timerStarted = false
-let timerPromise
-let timeInSeconds
-let intervalId
-let text
+let timerPromise;
+let timeInSeconds;
+let intervalId;
+let text;
 let userText = '';
-let childrenList
+let childrenList;
 const editableContent = document.querySelector('#editableContent');
 const placeholder = document.querySelector('#placeholder');
 const total = document.querySelector('#total');
@@ -19,15 +20,17 @@ const wordsElem = document.querySelector('#words');
 const wpmElem = document.querySelector('#wpm');
 const cwpmElem = document.querySelector('#cwpm');
 const resultContainer = document.querySelector('#resultContainer');
-const testBtn = document.querySelector('#testBtn')
-const textBtn = document.querySelector('#textBtn')
+const testBtn = document.querySelector('#testBtn');
+const textBtn = document.querySelector('#textBtn');
+const chartSelect = document.querySelector('#chartForm');
 
+const labels = ['Attempt', 'Total characters typed', 'Correct characters typed', 'Incorrect characters typed', 'Accuracy (%)', 'Words typed', 'Words Per Minute', 'Correct Words Per Minute']
 const allowed = ['Backspace', 'Escape', 'Enter'];
 
 const classes = {
     true: 'correct',
     false: 'incorrect'
-}
+};
 
 let result = {
     total: 0,

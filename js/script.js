@@ -1,7 +1,7 @@
 "use strict";
 
 import { initiateTest } from "./actions/wpm.js";
-import { getText, wrapText, reset, clearStats } from "./utils/utils.js";
+import { getText, wrapText, reset, clearStats, updateChart } from "./utils/utils.js";
 import { displayResults, storeResult } from "./actions/stats.js";
 
 testBtn.addEventListener('mousedown', launchTest)
@@ -10,6 +10,7 @@ textBtn.addEventListener('mousedown', async function () {
         wrapText();
     })
 })
+chartSelect.addEventListener('change', updateChart);
 
 //localStorage.clear();
 
@@ -20,6 +21,7 @@ async function appStart() {
         updateWordsElement();
         wrapText();
         displayResults();
+        updateChart()
     });
 }
 
@@ -34,6 +36,7 @@ async function launchTest() {
         const resultCopy = result
         storeResult(resultCopy);
         appendResult(resultCopy);
+        updateChart()
     }
 
     reset()

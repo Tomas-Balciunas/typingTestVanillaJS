@@ -5,7 +5,6 @@ function appendResult(data) {
     div.classList.add('result')
     resultContainer.prepend(div)
 
-    const labels = ['Attempt', 'Total characters typed', 'Correct characters typed', 'Incorrect characters typed', 'Accuracy (%)', 'Words typed', 'Words Per Minute', 'Correct Words Per Minute']
     const keys = ['attempt', 'total', 'correct', 'incorrect', 'percentage', 'words', 'wpm', 'cwpm']
 
     for (let i = 0; i < labels.length; i++) {

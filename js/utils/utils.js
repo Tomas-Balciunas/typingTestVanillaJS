@@ -56,3 +56,57 @@ export function clearStats() {
     updateCharactersElement()
     updateWordsElement()
 }
+
+export function chartView(value) {
+    if (chart) {
+        chart.destroy()
+    }
+
+    let xValues = [];
+    let yValues = [];
+
+    for (const [key, attempt] of Object.entries(localStorage).sort()) {
+        xValues.push(`Attempt ${JSON.parse(attempt)['attempt']}`)
+        yValues.push(JSON.parse(attempt)[value])
+    }
+
+    chart = new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                fill: false,
+                lineTension: 0.2,
+                color: "rgba(213, 89, 89,1.0)",
+                backgroundColor: "rgba(213, 89, 89,1.0)",
+                borderColor: "rgba(213, 89, 89,1.0)",
+                data: yValues
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: { display: false },
+            scales: {
+                yAxes: [{
+                    ticks: { fontColor: "white", min: 0 }, 
+                    gridLines: {color: "rgba(150, 150, 150,0.7)"}
+                }],
+                xAxes: [{
+                    ticks: { fontColor: "white"}, 
+                    gridLines: {color: "rgba(150, 150, 150,0.7)"}
+                }]
+            }
+        }
+    });
+}
+
+export function updateChart() {
+    let radios = chartSelect.elements['chart-radio']
+
+    for (let i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            chartView(radios[i].value)
+            return;
+        }
+    }
+}

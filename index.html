@@ -40,6 +40,18 @@
             <div id="resultContainer"></div>
         </div>
 
+        <form id="chartForm">
+            <label for="radioPerc">Accuracy:</label>
+            <input type="radio" id="radioPerc" name="chart-radio" value="percentage" checked>
+            <label for="radioWpm">WPM:</label>
+            <input type="radio" id="radioWpm" name="chart-radio" value="wpm">
+            <label for="radioCwpm">CWPM:</label>
+            <input type="radio" id="radioCwpm" name="chart-radio" value="cwpm">
+        </form>
+        <div id="chartCont">
+            
+            <canvas id="myChart"></canvas>
+        </div>
         <div>
             <p class="information">
                 Information:<br>
@@ -55,6 +67,9 @@
     </div>
 
 
+    <script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
     <script src="js/variables.js" ></script>
     <script src="js/utils/wpm_utils.js" ></script>
     <script src="js/utils/stats_utils.js" ></script>
