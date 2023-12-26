@@ -5,9 +5,12 @@ function appendResult(data) {
     div.classList.add('result')
     resultContainer.prepend(div)
 
-    for (const [key, value] of Object.entries(data)) {
+    const labels = ['Attempt', 'Total characters typed', 'Correct characters typed', 'Incorrect characters typed', 'Accuracy (%)', 'Words typed', 'Words Per Minute', 'Correct Words Per Minute']
+    const keys = ['attempt', 'total', 'correct', 'incorrect', 'percentage', 'words', 'wpm', 'cwpm']
+
+    for (let i = 0; i < labels.length; i++) {
         const li = document.createElement('li')
-        li.innerText = `${key}: ${value}`
+        li.innerText = `${labels[i]}: ${data[keys[i]]}`
         div.appendChild(li)
     }
 }

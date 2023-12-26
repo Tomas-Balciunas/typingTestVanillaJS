@@ -30,6 +30,8 @@ export async function initiateTest() {
             console.log(`Error: ${e}`)
         }
     }
+
+    wpmHandler()
     return true
 }
 

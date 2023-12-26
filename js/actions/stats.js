@@ -9,7 +9,8 @@ export function displayResults() {
 
 export function storeResult(data) {
     let len = Object.keys(localStorage).length + 1
-    localStorage.setItem(`attempt${len}`, JSON.stringify(data))
+    data['attempt'] = len
+    localStorage.setItem(len, JSON.stringify(data))
 }
 
 export function statsHandler(validated) {
